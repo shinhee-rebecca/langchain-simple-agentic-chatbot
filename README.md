@@ -1,129 +1,129 @@
 # SimpleChat Agent Demo
 
-LangChain 기반의 간단한 AI 챗봇 에이전트 데모 프로젝트입니다.
+A simple AI chatbot agent demo project based on LangChain.
 
-## 소개
+## Introduction
 
-이 프로젝트는 LangChain을 사용하여 도구(Tools)를 활용할 수 있는 대화형 AI 에이전트를 구현한 예제입니다. 기본적으로 "버블이"라는 친근한 페르소나를 가진 챗봇이 포함되어 있습니다.
+This project is an example of implementing a conversational AI agent that can utilize tools using LangChain. It includes a chatbot with a friendly persona called "Bubble" (버블이) by default.
 
-## 주요 기능
+## Key Features
 
-- 대화형 CLI 인터페이스
-- 커스터마이징 가능한 AI 페르소나
-- 확장 가능한 도구 시스템
-  - 날씨 조회
-  - 계산기
-  - 웹 검색
+- Interactive CLI interface
+- Customizable AI persona
+- Extensible tool system
+  - Weather lookup
+  - Calculator
+  - Web search
 
-## 설치
+## Installation
 
-### 요구사항
+### Requirements
 
-- Python 3.11 이상
-- [uv](https://github.com/astral-sh/uv) (권장) 또는 pip
+- Python 3.11 or higher
+- [uv](https://github.com/astral-sh/uv) (recommended) or pip
 
-### 설치 방법
+### Setup
 
 ```bash
-# 저장소 클론
+# Clone the repository
 git clone https://github.com/your-username/simplechat-agent-demo.git
 cd simplechat-agent-demo
 
-# uv 사용 시
+# Using uv
 uv sync
 
-# pip 사용 시
+# Using pip
 pip install -e .
 ```
 
-## 환경 설정
+## Configuration
 
-### .env 파일 설정
+### .env File Setup
 
-프로젝트 루트에 `.env` 파일을 생성하고 다음 내용을 설정하세요:
+Create a `.env` file in the project root and configure it as follows:
 
 ```env
 OPENAI_API_KEY=your-openai-api-key-here
 OPENAI_MODEL=gpt-4o-mini
 ```
 
-| 변수 | 설명 | 기본값 |
-|------|------|--------|
-| `OPENAI_API_KEY` | OpenAI API 키 (필수) | - |
-| `OPENAI_MODEL` | 사용할 모델 | `gpt-4o-mini` |
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | OpenAI API key (required) | - |
+| `OPENAI_MODEL` | Model to use | `gpt-4o-mini` |
 
-> **Note**: `.env` 파일은 `.gitignore`에 포함되어 있어 Git에 커밋되지 않습니다. 각자 환경에 맞게 설정해야 합니다.
+> **Note**: The `.env` file is included in `.gitignore` and will not be committed to Git. Configure it according to your environment.
 
-## 실행
+## Running
 
 ```bash
-# uv 사용 시
+# Using uv
 uv run python main.py
 
-# 가상환경 활성화 후
+# After activating virtual environment
 python main.py
 ```
 
-실행하면 대화형 인터페이스가 시작됩니다:
+When executed, the interactive interface starts:
 
 ```
 ==================================================
-버블이 챗봇에 오신 것을 환영합니다!
-   (종료: 'quit' 또는 'exit')
+Welcome to Bubble Chatbot!
+   (Exit: 'quit' or 'exit')
 ==================================================
 
-You: 서울 날씨 알려줘
-버블이: 서울은 현재 맑음이고, 기온은 15°C야!
+You: What's the weather in Seoul?
+Bubble: It's currently sunny in Seoul with a temperature of 15°C!
 ```
 
-## 프로젝트 구조
+## Project Structure
 
 ```
 simplechat-agent-demo/
-├── main.py              # 메인 실행 파일
+├── main.py              # Main entry point
 ├── agent/
-│   └── executor.py      # 에이전트 생성 로직
+│   └── executor.py      # Agent creation logic
 ├── config/
-│   └── settings.py      # 환경 설정 관리
+│   └── settings.py      # Environment configuration
 ├── llm/
-│   └── model.py         # LLM 모델 초기화
+│   └── model.py         # LLM model initialization
 ├── prompts/
-│   └── persona.py       # 페르소나 및 시스템 프롬프트
+│   └── persona.py       # Persona and system prompts
 ├── tools/
-│   ├── __init__.py      # 도구 모음 (ALL_TOOLS)
-│   ├── weather.py       # 날씨 조회 도구
-│   ├── calculator.py    # 계산기 도구
-│   └── search.py        # 웹 검색 도구
-├── pyproject.toml       # 프로젝트 의존성
-└── .env                 # 환경 변수 (직접 생성 필요)
+│   ├── __init__.py      # Tool collection (ALL_TOOLS)
+│   ├── weather.py       # Weather lookup tool
+│   ├── calculator.py    # Calculator tool
+│   └── search.py        # Web search tool
+├── pyproject.toml       # Project dependencies
+└── .env                 # Environment variables (create manually)
 ```
 
-## 확장 가이드
+## Extension Guide
 
-### 페르소나 커스터마이징
+### Customizing Persona
 
-`prompts/persona.py`에서 AI의 성격과 말투를 자유롭게 수정할 수 있습니다:
+You can freely modify the AI's personality and speech style in `prompts/persona.py`:
 
 ```python
 # prompts/persona.py
 MY_PERSONA = """
-너는 '나만의 AI'라는 이름의 전문적인 비서야.
+You are a professional assistant named 'My AI'.
 
-## 성격
-- 정중하고 전문적이야
-- 존댓말을 사용해
+## Personality
+- Polite and professional
+- Uses formal language
 
-## 역할
-- 사용자의 업무를 지원해
+## Role
+- Support user's work tasks
 """
 
 def get_system_prompt(persona: str = MY_PERSONA) -> str:
     return persona
 ```
 
-### 새로운 도구 추가
+### Adding New Tools
 
-`tools/` 디렉토리에 새로운 도구를 추가할 수 있습니다:
+You can add new tools in the `tools/` directory:
 
 ```python
 # tools/my_tool.py
@@ -132,16 +132,16 @@ from langchain_core.tools import tool
 @tool
 def my_custom_tool(param: str) -> str:
     """
-    도구에 대한 설명을 작성합니다.
+    Write a description of the tool.
 
     Args:
-        param: 파라미터 설명
+        param: Parameter description
     """
-    # 도구 로직 구현
-    return f"결과: {param}"
+    # Implement tool logic
+    return f"Result: {param}"
 ```
 
-새로운 도구를 `tools/__init__.py`에 등록합니다:
+Register the new tool in `tools/__init__.py`:
 
 ```python
 # tools/__init__.py
@@ -151,59 +151,59 @@ ALL_TOOLS = [
     get_current_weather,
     calculate,
     search_web,
-    my_custom_tool,  # 새 도구 추가
+    my_custom_tool,  # Add new tool
 ]
 ```
 
-### 활용 예시
+### Use Cases
 
-- **고객 서비스 봇**: 페르소나를 수정하고 FAQ 검색 도구 추가
-- **업무 비서**: 캘린더, 이메일 도구 연동
-- **교육용 봇**: 퀴즈, 학습 자료 검색 도구 추가
+- **Customer Service Bot**: Modify persona and add FAQ search tool
+- **Work Assistant**: Integrate calendar, email tools
+- **Educational Bot**: Add quiz, learning material search tools
 
-## 도구 상세
+## Tool Details
 
-### 날씨 조회 (`get_current_weather`)
+### Weather Lookup (`get_current_weather`)
 
-[wttr.in](https://wttr.in/) API를 사용하여 전 세계 도시의 현재 날씨를 조회합니다.
-
-```
-You: 서울 날씨 어때?
-버블이: 서울의 현재 날씨야!
-       날씨: 맑음
-       기온: 15°C (체감 13°C)
-       습도: 45%
-       바람: 12km/h
-```
-
-- **지원 정보**: 날씨 상태, 기온, 체감온도, 습도, 풍속
-- **한국어 지원**: 날씨 설명이 한국어로 제공됩니다
-- **입력 예시**: `서울`, `Seoul`, `Tokyo`, `New York`
-
-### 웹 검색 (`search_web`)
-
-[DuckDuckGo](https://duckduckgo.com/)를 사용하여 웹에서 정보를 검색합니다.
+Uses the [wttr.in](https://wttr.in/) API to retrieve current weather for cities worldwide.
 
 ```
-You: 파이썬 비동기 프로그래밍에 대해 검색해줘
-버블이: '파이썬 비동기 프로그래밍' 검색 결과야!
-       1. Python asyncio 공식 문서
-          Python의 비동기 I/O 프레임워크...
-          링크: https://docs.python.org/...
-       ...
+You: How's the weather in Seoul?
+Bubble: Here's the current weather in Seoul!
+        Weather: Clear
+        Temperature: 15°C (Feels like 13°C)
+        Humidity: 45%
+        Wind: 12km/h
 ```
 
-- **검색 결과**: 최대 5개의 관련 결과 반환
-- **제공 정보**: 제목, 요약, 링크
+- **Supported Info**: Weather condition, temperature, feels-like temperature, humidity, wind speed
+- **Multilingual Support**: Weather descriptions available in Korean
+- **Input Examples**: `Seoul`, `Tokyo`, `New York`, `London`
 
-## 의존성
+### Web Search (`search_web`)
 
-- [LangChain](https://python.langchain.com/) - LLM 애플리케이션 프레임워크
-- [langchain-openai](https://python.langchain.com/docs/integrations/llms/openai/) - OpenAI 통합
-- [python-dotenv](https://github.com/theskumar/python-dotenv) - 환경 변수 관리
-- [duckduckgo-search](https://github.com/deedy5/duckduckgo_search) - DuckDuckGo 검색 API
-- [requests](https://requests.readthedocs.io/) - HTTP 클라이언트
+Uses [DuckDuckGo](https://duckduckgo.com/) to search for information on the web.
 
-## 라이선스
+```
+You: Search for Python async programming
+Bubble: Here are the search results for 'Python async programming'!
+        1. Python asyncio Official Documentation
+           Python's asynchronous I/O framework...
+           Link: https://docs.python.org/...
+        ...
+```
+
+- **Search Results**: Returns up to 5 relevant results
+- **Provided Info**: Title, summary, link
+
+## Dependencies
+
+- [LangChain](https://python.langchain.com/) - LLM application framework
+- [langchain-openai](https://python.langchain.com/docs/integrations/llms/openai/) - OpenAI integration
+- [python-dotenv](https://github.com/theskumar/python-dotenv) - Environment variable management
+- [duckduckgo-search](https://github.com/deedy5/duckduckgo_search) - DuckDuckGo search API
+- [requests](https://requests.readthedocs.io/) - HTTP client
+
+## License
 
 MIT License
