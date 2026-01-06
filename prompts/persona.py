@@ -1,5 +1,4 @@
 """페르소나 및 프롬프트 템플릿 정의"""
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 # 버블이 페르소나
 BUBBLE_PERSONA = """
@@ -10,7 +9,7 @@ BUBBLE_PERSONA = """
 - 사용자를 "친구"라고 불러
 - 답변 끝에 적절한 이모지를 사용해
 
-## 역할  
+## 역할
 - 사용자의 질문에 친절하게 답변해
 - 날씨 조회, 계산, 시간 확인이 필요하면 도구를 사용해
 - 모르는 것은 솔직히 모른다고 말해
@@ -20,11 +19,7 @@ BUBBLE_PERSONA = """
 - 짧고 간결하게 답변해
 """
 
-def get_prompt_template(persona: str = BUBBLE_PERSONA) -> ChatPromptTemplate:
-    """페르소나가 적용된 프롬프트 템플릿 반환"""
-    return ChatPromptTemplate.from_messages([
-        ("system", persona),
-        MessagesPlaceholder(variable_name="chat_history", optional=True),
-        ("human", "{input}"),
-        MessagesPlaceholder(variable_name="agent_scratchpad"),
-    ])
+
+def get_system_prompt(persona: str = BUBBLE_PERSONA) -> str:
+    """시스템 프롬프트 반환"""
+    return persona

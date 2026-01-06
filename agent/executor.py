@@ -1,18 +1,18 @@
 """에이전트 생성 및 실행"""
-from langchain.agents import create_tool_calling_agent, AgentExecutor
+from langchain.agents import create_agent as langchain_create_agent
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
+
 
 def create_agent(
     llm: ChatOpenAI,
     tools: list,
-    prompt: ChatPromptTemplate,
+    system_prompt: str,
     verbose: bool = True
-) -> AgentExecutor:
+):
     """에이전트 실행기 생성"""
-    agent = create_tool_calling_agent(llm, tools, prompt)
-    return AgentExecutor(
-        agent=agent,
+    return langchain_create_agent(
+        model=llm,
         tools=tools,
-        verbose=verbose,
+        system_prompt=system_prompt,
+        debug=verbose,
     )
