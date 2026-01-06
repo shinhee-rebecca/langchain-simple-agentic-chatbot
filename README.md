@@ -161,11 +161,48 @@ ALL_TOOLS = [
 - **업무 비서**: 캘린더, 이메일 도구 연동
 - **교육용 봇**: 퀴즈, 학습 자료 검색 도구 추가
 
+## 도구 상세
+
+### 날씨 조회 (`get_current_weather`)
+
+[wttr.in](https://wttr.in/) API를 사용하여 전 세계 도시의 현재 날씨를 조회합니다.
+
+```
+You: 서울 날씨 어때?
+버블이: 서울의 현재 날씨야!
+       날씨: 맑음
+       기온: 15°C (체감 13°C)
+       습도: 45%
+       바람: 12km/h
+```
+
+- **지원 정보**: 날씨 상태, 기온, 체감온도, 습도, 풍속
+- **한국어 지원**: 날씨 설명이 한국어로 제공됩니다
+- **입력 예시**: `서울`, `Seoul`, `Tokyo`, `New York`
+
+### 웹 검색 (`search_web`)
+
+[DuckDuckGo](https://duckduckgo.com/)를 사용하여 웹에서 정보를 검색합니다.
+
+```
+You: 파이썬 비동기 프로그래밍에 대해 검색해줘
+버블이: '파이썬 비동기 프로그래밍' 검색 결과야!
+       1. Python asyncio 공식 문서
+          Python의 비동기 I/O 프레임워크...
+          링크: https://docs.python.org/...
+       ...
+```
+
+- **검색 결과**: 최대 5개의 관련 결과 반환
+- **제공 정보**: 제목, 요약, 링크
+
 ## 의존성
 
 - [LangChain](https://python.langchain.com/) - LLM 애플리케이션 프레임워크
 - [langchain-openai](https://python.langchain.com/docs/integrations/llms/openai/) - OpenAI 통합
 - [python-dotenv](https://github.com/theskumar/python-dotenv) - 환경 변수 관리
+- [duckduckgo-search](https://github.com/deedy5/duckduckgo_search) - DuckDuckGo 검색 API
+- [requests](https://requests.readthedocs.io/) - HTTP 클라이언트
 
 ## 라이선스
 
